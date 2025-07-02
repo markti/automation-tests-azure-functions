@@ -20,7 +20,7 @@ run "setup" {
 
 run "provision" {
 
-command = apply
+  command = apply
 
   module {
     source = "./src/terraform/flex"
@@ -34,7 +34,7 @@ command = apply
   }
 
   assert {
-    condition     = length(module.provision.resource_group_name) > 0
+    condition     = length(azurerm_resource_group.main.name) > 0
     error_message = "Must have a valid Resource Group Name"
   }
 }
