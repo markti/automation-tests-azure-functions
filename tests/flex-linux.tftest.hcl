@@ -72,7 +72,7 @@ run "deploy" {
   }
 
   assert {
-    condition     = length(azurerm_function_app_host_keys.main.default_function_key) > 0
+    condition     = length(data.azurerm_function_app_host_keys.main.default_function_key) > 0
     error_message = "Function Key should be OK"
   }
 }
