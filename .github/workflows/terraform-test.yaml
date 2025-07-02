@@ -92,7 +92,6 @@ jobs:
           ARM_USE_OIDC: true
         run: |
           export ARM_OID_REQUEST_TOKEN=$ACTIONS_ID_TOKEN_REQUEST_TOKEN
-          TF_LOG=DEBUG
 
           terraform init
 
