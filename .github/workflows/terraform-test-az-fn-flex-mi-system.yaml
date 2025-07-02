@@ -2,8 +2,11 @@ name: Azure-Functions-FlexConsumption-Managed-Identity-SystemAssigned
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - "src/terraform/flex-mi-system/**"
+  pull_request:
+    paths:
+      - "src/terraform/flex-mi-system/**"
   workflow_dispatch:
 
 env:

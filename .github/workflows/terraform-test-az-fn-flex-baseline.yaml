@@ -2,8 +2,11 @@ name: Azure-Functions-FlexConsumption-Baseline
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - "src/terraform/flex-baseline/**"
+  pull_request:
+    paths:
+      - "src/terraform/flex-baseline/**"
   workflow_dispatch:
 
 env:
