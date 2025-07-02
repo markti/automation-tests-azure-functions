@@ -1,0 +1,105 @@
+name: Azure-Functions-Consumption-Windows
+
+on:
+  push:
+    paths:
+      - "src/terraform/consumption-windows/**"
+  pull_request:
+    paths:
+      - "src/terraform/consumption-windows/**"
+  workflow_dispatch:
+
+env:
+  BuildConfiguration: Release
+  WorkingDirectory: ./src/dotnet/8.0/FunctionApp1
+  SolutionFile: ./FunctionApp1.sln
+  FunctionProjectFile: ./FunctionApp1/FunctionApp1.csproj
+  DotnetVersion: 8.x
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-dotnet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DotnetVersion }}
+
+      - name: Restore dependencies
+        working-directory: ${{ env.WorkingDirectory }}
+        run: |
+          dotnet restore ${{ env.SolutionFile }}
+
+      - name: Build solution
+        working-directory: ${{ env.WorkingDirectory }}
+        run: |
+          dotnet build ${{ env.SolutionFile }} --configuration ${{ env.BuildConfiguration }}
+
+      - name: Publish solution
+        working-directory: ${{ env.WorkingDirectory }}
+        run: |
+          dotnet publish ${{ env.FunctionProjectFile }} \
+            --configuration ${{ env.BuildConfiguration }} \
+            --output ./publish
+
+      - name: Generate the Deployment Package
+        working-directory: ${{ env.WorkingDirectory }}/publish
+        run: |
+          zip -r ../dotnet-deployment.zip .
+
+      - name: Upload Deployment Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-deployment
+          path: ${{ env.WorkingDirectory }}/dotnet-deployment.zip # If a wildcard pattern is used, the path hierarchy will be preserved after the first wildcard pattern. Hence avoid wildcard.
+
+  terraform-test:
+    needs: [build-dotnet]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Az CLI login"
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.ARM_CLIENT_ID }}
+          tenant-id: ${{ vars.ARM_TENANT_ID }}
+          subscription-id: ${{ vars.ARM_SUBSCRIPTION_ID }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dotnet-deployment
+          path: ./
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - id: setup
+        name: Setup `terraform`
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.x
+
+      - id: test
+        name: Terraform Test
+        env:
+          ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+          ARM_USE_OIDC: true
+        run: |
+          export ARM_OID_REQUEST_TOKEN=$ACTIONS_ID_TOKEN_REQUEST_TOKEN
+
+          terraform init
+
+          terraform test -verbose \
+            -filter=tests/consumption-windows.tftest.hcl
