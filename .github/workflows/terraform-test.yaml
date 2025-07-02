@@ -72,6 +72,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: dotnet-deployment
+          path: ./
 
       - name: Display structure of downloaded files
         run: ls -R
