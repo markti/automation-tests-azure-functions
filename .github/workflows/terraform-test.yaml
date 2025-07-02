@@ -95,5 +95,5 @@ jobs:
           TF_LOG=DEBUG
 
           terraform init
-            
+
           terraform test -verbose -filter=tests/consumption-linux.tftest.hcl
