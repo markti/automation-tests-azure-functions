@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  terraform-plan:
+  terraform-test:
     runs-on: ubuntu-latest
 
     steps:
