@@ -1,3 +1,3 @@
 data "local_file" "dotnet_deployment" {
-  filename = "./dotnet-deployment.zip"
+  filename = var.deployment_package_path
 }

@@ -4,15 +4,21 @@ provider "azurerm" {
 }
 
 variables {
-  application_name = "fn-tf-tests"
-  environment_name = "test"
-  location         = "westus3"
+  application_name        = "fn-tf-tests"
+  environment_name        = "test"
+  location                = "westus3"
+  deployment_package_path = "./dotnet-deployment.zip"
 }
 
 run "setup" {
   module {
     source = "./testing/setup"
   }
+
+  variables {
+    deployment_package_path = var.deployment_package_path
+  }
+
   providers = {
     azurerm = azurerm
   }
@@ -32,6 +38,28 @@ run "provision" {
   }
 
   variables {
+  }
+
+  providers = {
+    azurerm = azurerm
+  }
+
+  assert {
+    condition     = length(azurerm_resource_group.main.name) > 0
+    error_message = "Must have a valid Resource Group Name"
+  }
+}
+
+run "deploy" {
+
+  module {
+    source = "./testing/deploy-azure-fn"
+  }
+
+  variables {
+    function_app_name           = run.provision.function_app_name
+    function_app_resource_group = run.provision.resource_group_name
+    deployment_package_path     = var.deployment_package_path
   }
 
   providers = {
