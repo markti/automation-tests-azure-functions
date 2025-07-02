@@ -3,11 +3,58 @@ name: AT-AT-Manual-Terraform-Test
 on:
   workflow_dispatch:
 
+env:
+  BuildConfiguration: Release
+  WorkingDirectory: src/dotnet/8.0/FunctionApp1
+  SolutionFile: src/dotnet/8.0/FunctionApp1/FunctionApp1.sln
+  FunctionProjectFile: src/dotnet/8.0/FunctionApp1/FunctionApp1/FunctionApp1.csproj
+  DotnetVersion: 8.x
+
 permissions:
   id-token: write
   contents: read
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DotnetVersion }}
+
+      - name: Restore dependencies
+        working-directory: ${{ env.WorkingDirectory }}
+        run: |
+          dotnet restore ${{ env.SolutionFile }}
+
+      - name: Build solution
+        working-directory: ${{ env.WorkingDirectory }}
+        run: |
+          dotnet build ${{ env.SolutionFile }} --configuration $${{ env.BuildConfiguration }}
+
+      - name: Publish solution
+        working-directory: ${{ env.WorkingDirectory }}
+        run: |
+          dotnet publish ${{ env.FunctionProjectFile }} \
+            --configuration ${{ env.BuildConfiguration }} \
+            --output ./publish
+
+      - name: Generate the Deployment Package
+        working-directory: ${{ env.WorkingDirectory }}/publish
+        run: |
+          zip -r ../deployment.zip .
+
+      - name: Upload Deployment Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-deployment
+          path: "**/deployment.zip"
+
   terraform-test:
     runs-on: ubuntu-latest
 
