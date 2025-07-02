@@ -69,6 +69,13 @@ jobs:
           tenant-id: ${{ vars.ARM_TENANT_ID }}
           subscription-id: ${{ vars.ARM_SUBSCRIPTION_ID }}
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: dotnet-deployment
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - id: setup
         name: Setup `terraform`
         uses: hashicorp/setup-terraform@v3
