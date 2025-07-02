@@ -16,6 +16,11 @@ run "setup" {
   providers = {
     azurerm = azurerm
   }
+
+  assert {
+    condition     = length(data.local_file.dotnet_deployment.id) > 0
+    error_message = ".NET Deployment Package must be available"
+  }
 }
 
 run "provision" {

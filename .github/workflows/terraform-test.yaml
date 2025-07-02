@@ -47,13 +47,13 @@ jobs:
       - name: Generate the Deployment Package
         working-directory: ${{ env.WorkingDirectory }}/publish
         run: |
-          zip -r ../deployment.zip .
+          zip -r ../dotnet-deployment.zip .
 
       - name: Upload Deployment Package
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-deployment
-          path: ${{ env.WorkingDirectory }}/deployment.zip # If a wildcard pattern is used, the path hierarchy will be preserved after the first wildcard pattern. Hence avoid wildcard.
+          path: ${{ env.WorkingDirectory }}/dotnet-deployment.zip # If a wildcard pattern is used, the path hierarchy will be preserved after the first wildcard pattern. Hence avoid wildcard.
 
   terraform-test:
     needs: [build-dotnet]
