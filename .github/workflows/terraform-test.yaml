@@ -6,8 +6,8 @@ on:
 env:
   BuildConfiguration: Release
   WorkingDirectory: ./src/dotnet/8.0/FunctionApp1
-  SolutionFile: ./src/dotnet/8.0/FunctionApp1/FunctionApp1.sln
-  FunctionProjectFile: ./src/dotnet/8.0/FunctionApp1/FunctionApp1/FunctionApp1.csproj
+  SolutionFile: ./FunctionApp1.sln
+  FunctionProjectFile: ./FunctionApp1/FunctionApp1.csproj
   DotnetVersion: 8.x
 
 permissions:
