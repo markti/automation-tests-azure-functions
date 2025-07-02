@@ -34,7 +34,6 @@ jobs:
           ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
           ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
           ARM_USE_OIDC: true
-        working-directory: ${{ vars.TERRAFORM_WORKING_DIRECTORY }}
         run: |
           export ARM_OID_REQUEST_TOKEN=$ACTIONS_ID_TOKEN_REQUEST_TOKEN
 
