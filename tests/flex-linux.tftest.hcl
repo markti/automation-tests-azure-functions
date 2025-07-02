@@ -95,4 +95,9 @@ run "healthcheck" {
     condition     = data.http.endpoint.status_code == 200
     error_message = "Function Endpoint should be OK"
   }
+
+  assert {
+    condition     = data.http.endpoint.body == "Welcome to Azure Functions!"
+    error_message = "Function Endpoint should return the correct content"
+  }
 }
