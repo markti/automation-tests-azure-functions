@@ -1,4 +1,4 @@
-name: AT-AT-Manual-Terraform-Plan
+name: AT-AT-Manual-Terraform-Test
 
 on:
   workflow_dispatch:
