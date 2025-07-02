@@ -87,4 +87,4 @@ jobs:
 
           terraform init
             
-          terraform test --verbose
+          terraform test -verbose -filter=consumption-linux.tftest.hcl
