@@ -1,4 +1,4 @@
-name: Azure-Functions-FlexConsumption-Baseline
+name: Azure-Functions-FlexConsumption-Managed-Identity-SystemAssigned
 
 on:
   push:
