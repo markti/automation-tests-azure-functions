@@ -84,7 +84,7 @@ run "healthcheck" {
   }
 
   variables {
-    endpoint = "${run.provision.function_app_default_hostname}/api/Function1?code=${run.deploy.function_key}"
+    endpoint = "https://${run.provision.function_app_default_hostname}/api/Function1?code=${run.deploy.function_key}"
   }
 
   providers = {
