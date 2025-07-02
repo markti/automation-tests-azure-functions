@@ -15,7 +15,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-dotnet:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +35,7 @@ jobs:
       - name: Build solution
         working-directory: ${{ env.WorkingDirectory }}
         run: |
-          dotnet build ${{ env.SolutionFile }} --configuration $${{ env.BuildConfiguration }}
+          dotnet build ${{ env.SolutionFile }} --configuration ${{ env.BuildConfiguration }}
 
       - name: Publish solution
         working-directory: ${{ env.WorkingDirectory }}
