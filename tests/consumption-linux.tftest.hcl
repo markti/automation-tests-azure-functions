@@ -4,6 +4,8 @@ provider "azurerm" {
 }
 
 variables {
+  application_name = "fn-tf-tests"
+  environment_name = "test"
   location         = "westus3"
 }
 
