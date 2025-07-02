@@ -40,4 +40,4 @@ jobs:
 
           terraform init
             
-          terraform test --verbose --debug-keep=always
+          terraform test --verbose
