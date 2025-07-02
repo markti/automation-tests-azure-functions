@@ -34,7 +34,7 @@ run "provision" {
   command = apply
 
   module {
-    source = "./src/terraform/flex"
+    source = "./src/terraform/flex-mi-system"
   }
 
   variables {

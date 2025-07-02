@@ -96,4 +96,5 @@ jobs:
           terraform init
 
           terraform test -verbose \
-            -filter=tests/flex-linux.tftest.hcl
+            -filter=tests/flex-baseline.tftest.hcl \
+            -filter=tests/flex-mi-system.tftest.hcl
