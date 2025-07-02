@@ -1,6 +1,9 @@
-name: AT-AT-Manual-Terraform-Test
+name: Azure-Functions-FlexConsumption-Baseline
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 env:
@@ -96,5 +99,4 @@ jobs:
           terraform init
 
           terraform test -verbose \
-            -filter=tests/flex-baseline.tftest.hcl \
-            -filter=tests/flex-mi-system.tftest.hcl
+            -filter=tests/flex-baseline.tftest.hcl
