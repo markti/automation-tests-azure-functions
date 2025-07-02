@@ -25,7 +25,7 @@ jobs:
         name: Setup `terraform`
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: ${{ vars.TERRAFORM_VERSION }}
+          terraform_version: 1.12.x
 
       - id: test
         name: Terraform Test
@@ -36,7 +36,8 @@ jobs:
           ARM_USE_OIDC: true
         run: |
           export ARM_OID_REQUEST_TOKEN=$ACTIONS_ID_TOKEN_REQUEST_TOKEN
+          TF_LOG=DEBUG
 
           terraform init
             
-          terraform test
+          terraform test --verbose --debug-keep=always
