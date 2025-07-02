@@ -67,7 +67,7 @@ run "deploy" {
   }
 
   assert {
-    condition     = length(azurerm_resource_group.main.name) > 0
-    error_message = "Must have a valid Resource Group Name"
+    condition     = length(null_resource.publish.id) > 0
+    error_message = "Null Resource Should be OK"
   }
 }
