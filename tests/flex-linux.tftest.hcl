@@ -92,7 +92,7 @@ run "healthcheck" {
   }
 
   assert {
-    condition     = length(null_resource.publish.id) > 0
-    error_message = "Null Resource Should be OK"
+    condition     = data.http.endpoint.status_code == 200
+    error_message = "Function Endpoint should be OK"
   }
 }
