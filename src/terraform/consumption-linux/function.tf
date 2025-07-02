@@ -5,7 +5,7 @@ resource "random_string" "suffix" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name                = "asp-${random_string.suffix.result}"
+  name                = "asp-${var.application_name}-${var.environment_name}-${random_string.suffix.result}"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   os_type             = "Linux"
@@ -21,7 +21,7 @@ resource "azurerm_storage_account" "function" {
 }
 
 resource "azurerm_linux_function_app" "main" {
-  name                       = "func-dotnet-${random_string.suffix.result}"
+  name                       = "func-dotnet-${var.application_name}-${var.environment_name}-${random_string.suffix.result}"
   resource_group_name        = azurerm_resource_group.main.name
   location                   = azurerm_resource_group.main.location
   service_plan_id            = azurerm_service_plan.main.id

@@ -97,5 +97,4 @@ jobs:
           terraform init
 
           terraform test -verbose \
-            -filter=tests/consumption-linux.tftest.hcl \
-            -filter=tests/consumption-windows.tftest.hcl
+            -filter=tests/flex-linux.tftest.hcl

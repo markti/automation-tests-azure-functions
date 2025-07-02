@@ -5,7 +5,7 @@ resource "random_string" "suffix" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name                = "asp-${random_string.suffix.result}"
+  name                = "asp-${var.application_name}-${var.environment_name}-${random_string.suffix.result}"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   os_type             = "Windows"
