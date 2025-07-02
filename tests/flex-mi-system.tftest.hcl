@@ -97,7 +97,7 @@ run "healthcheck" {
   }
 
   assert {
-    condition     = data.http.endpoint.body == "Welcome to Azure Functions!"
+    condition     = data.http.endpoint.response_body == "Welcome to Azure Functions!"
     error_message = "Function Endpoint should return the correct content"
   }
 }
