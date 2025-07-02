@@ -24,7 +24,7 @@ run "setup" {
   }
 
   assert {
-    condition     = length(data.local_file.dotnet_deployment.id) > 0
+    condition     = length(data.local_sensitive_file.dotnet_deployment.id) > 0
     error_message = ".NET Deployment Package must be available"
   }
 }
