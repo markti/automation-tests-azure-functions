@@ -56,7 +56,7 @@ jobs:
           path: "**/deployment.zip"
 
   terraform-test:
-    needs: [build]
+    needs: [build-dotnet]
     runs-on: ubuntu-latest
 
     steps:
