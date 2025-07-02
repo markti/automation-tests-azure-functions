@@ -1,3 +1,3 @@
-variable "function_app_default_hostname" {
+variable "endpoint" {
   type = string
 }
