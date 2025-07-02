@@ -23,7 +23,7 @@ run "provision" {
 command = apply
 
   module {
-    source = "./src/terraform/flex-linux"
+    source = "./src/terraform/flex"
   }
 
   variables {
