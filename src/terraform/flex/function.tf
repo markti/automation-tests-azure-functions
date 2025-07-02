@@ -22,7 +22,7 @@ resource "azurerm_storage_account" "function" {
 
 resource "azurerm_storage_container" "flex" {
   name                  = "flex"
-  storage_account_id    = azurerm_storage_account.example.id
+  storage_account_id    = azurerm_storage_account.function.id
   container_access_type = "private"
 }
 
