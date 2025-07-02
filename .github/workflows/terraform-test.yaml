@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-deployment
-          path: "**/deployment.zip"
+          path: "./src/dotnet/8.0/FunctionApp1/deployment.zip" # If a wildcard pattern is used, the path hierarchy will be preserved after the first wildcard pattern. Hence avoid wildcard.
 
   terraform-test:
     needs: [build-dotnet]
