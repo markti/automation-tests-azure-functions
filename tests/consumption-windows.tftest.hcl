@@ -1,3 +1,6 @@
+# Inspired by the Official Bicep Sample:
+# https://github.com/Azure-Samples/function-app-arm-templates/blob/main/function-app-windows-consumption/README.md
+
 provider "azurerm" {
   features {}
   resource_provider_registrations = "none"
