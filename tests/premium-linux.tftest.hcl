@@ -6,7 +6,7 @@ provider "azurerm" {
 variables {
   application_name        = "fn-tf-tests"
   environment_name        = "test"
-  location                = "westus3"
+  location                = "canadacentral"
   deployment_package_path = "./dotnet-deployment.zip"
 }
 
