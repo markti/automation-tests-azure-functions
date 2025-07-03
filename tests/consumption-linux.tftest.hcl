@@ -29,6 +29,7 @@ run "setup" {
   }
 }
 
+# Provision and deploy the Azure Function App
 run "provision" {
 
   command = apply
@@ -38,6 +39,7 @@ run "provision" {
   }
 
   variables {
+    deployment_package_path = var.deployment_package_path
   }
 
   providers = {
@@ -50,16 +52,16 @@ run "provision" {
   }
 }
 
-run "deploy" {
+# Get the Azure Function Access Key
+run "authn" {
 
   module {
-    source = "./testing/deploy-azure-fn"
+    source = "./testing/authn-azure-fn"
   }
 
   variables {
     function_app_name           = run.provision.function_app_name
     function_app_resource_group = run.provision.resource_group_name
-    deployment_package_path     = var.deployment_package_path
   }
 
   providers = {
@@ -77,6 +79,7 @@ run "deploy" {
   }
 }
 
+# Verify the Azure Function is deployed and accessible
 run "healthcheck" {
 
   module {
@@ -84,7 +87,7 @@ run "healthcheck" {
   }
 
   variables {
-    endpoint = "https://${run.provision.function_app_default_hostname}/api/Function1?code=${run.deploy.function_key}"
+    endpoint = "https://${run.provision.function_app_default_hostname}/api/Function1?code=${run.authn.function_key}"
   }
 
   providers = {

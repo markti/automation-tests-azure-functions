@@ -7,3 +7,6 @@ variable "environment_name" {
 variable "location" {
   type = string
 }
+variable "deployment_package_path" {
+  type = string
+}
