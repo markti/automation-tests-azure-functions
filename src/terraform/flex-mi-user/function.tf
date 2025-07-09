@@ -43,13 +43,14 @@ resource "azurerm_function_app_flex_consumption" "main" {
     identity_ids = [azurerm_user_assigned_identity.function.id]
   }
 
-  storage_container_type      = "blobContainer"
-  storage_container_endpoint  = "${azurerm_storage_account.function.primary_blob_endpoint}${azurerm_storage_container.flex.name}"
-  storage_authentication_type = "UserAssignedIdentity"
-  runtime_name                = "dotnet-isolated"
-  runtime_version             = "8.0"
-  maximum_instance_count      = 50
-  instance_memory_in_mb       = 2048
+  storage_container_type            = "blobContainer"
+  storage_container_endpoint        = "${azurerm_storage_account.function.primary_blob_endpoint}${azurerm_storage_container.flex.name}"
+  storage_authentication_type       = "UserAssignedIdentity"
+  storage_user_assigned_identity_id = azurerm_user_assigned_identity.function.id
+  runtime_name                      = "dotnet-isolated"
+  runtime_version                   = "8.0"
+  maximum_instance_count            = 50
+  instance_memory_in_mb             = 2048
 
   site_config {}
 }
