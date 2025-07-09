@@ -8,3 +8,4 @@
 **/.vs/*
 src/dotnet/8.0/FunctionApp1/publish/*
 src/terraform/consumption-linux/dotnet-deployment.zip
+src/terraform/consumption-windows/dotnet-deployment.zip

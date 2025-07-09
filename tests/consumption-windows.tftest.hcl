@@ -73,6 +73,23 @@ run "deploy" {
     condition     = length(null_resource.publish.id) > 0
     error_message = "Null Resource Should be OK"
   }
+}
+
+# Get the Azure Function Access Key
+run "authn" {
+
+  module {
+    source = "./testing/authn-azure-fn"
+  }
+
+  variables {
+    function_app_name           = run.provision.function_app_name
+    function_app_resource_group = run.provision.resource_group_name
+  }
+
+  providers = {
+    azurerm = azurerm
+  }
 
   assert {
     condition     = length(data.azurerm_function_app_host_keys.main.default_function_key) > 0
@@ -87,7 +104,7 @@ run "healthcheck" {
   }
 
   variables {
-    endpoint = "https://${run.provision.function_app_default_hostname}/api/Function1?code=${run.deploy.function_key}"
+    endpoint = "https://${run.provision.function_app_default_hostname}/api/Function1?code=${run.authn.function_key}"
   }
 
   providers = {
