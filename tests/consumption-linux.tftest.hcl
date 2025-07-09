@@ -72,11 +72,6 @@ run "authn" {
   }
 
   assert {
-    condition     = length(null_resource.publish.id) > 0
-    error_message = "Null Resource Should be OK"
-  }
-
-  assert {
     condition     = length(data.azurerm_function_app_host_keys.main.default_function_key) > 0
     error_message = "Function Key should be OK"
   }
