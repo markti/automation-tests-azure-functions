@@ -47,8 +47,9 @@ jobs:
         working-directory: ${{ env.WorkingDirectory }}
         run: |
           dotnet publish ${{ env.FunctionProjectFile }} \
-            --configuration ${{ env.BuildConfiguration }} \
-            --output ./publish
+            -r linux-x64 \
+            -c ${{ env.BuildConfiguration }} \
+            -o ./publish
 
       - name: Generate the Deployment Package
         working-directory: ${{ env.WorkingDirectory }}/publish

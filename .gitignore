@@ -6,3 +6,5 @@
 **/.debug.tfvars
 **/.debug*.tfvars
 **/.vs/*
+src/dotnet/8.0/FunctionApp1/publish/*
+src/terraform/consumption-linux/dotnet-deployment.zip
